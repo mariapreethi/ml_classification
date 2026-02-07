@@ -6,26 +6,28 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, matthews_corrcoef, confusion_matrix
 from sklearn.preprocessing import LabelEncoder
+import os
 
 st.set_page_config(layout="wide") # For a wider layout
 
 st.title('Breast Cancer Prediction App')
 
+script_dir = os.path.dirname(__file__)
+
 # Load the StandardScaler
-scaler = joblib.load('scaler.joblib')
+scaler = joblib.load(os.path.join(script_dir, 'model', 'scaler.joblib'))
 
 # Load the trained classification models
 models = {
-    'Logistic Regression': joblib.load('logistic_regression_model.joblib'),
-    'Decision Tree': joblib.load('decision_tree_model.joblib'),
-    'K-Nearest Neighbors': joblib.load('k-nearest_neighbors_model.joblib'),
-    'Gaussian Naive Bayes': joblib.load('gaussian_naive_bayes_model.joblib'),
-    'Random Forest': joblib.load('random_forest_model.joblib'),
-    'XGBoost': joblib.load('xgboost_model.joblib')
+    'Logistic Regression': joblib.load(os.path.join(script_dir, 'model', 'logistic_regression_model.joblib')),
+    'Decision Tree': joblib.load(os.path.join(script_dir, 'model', 'decision_tree_model.joblib')),
+    'K-Nearest Neighbors': joblib.load(os.path.join(script_dir, 'model', 'k-nearest_neighbors_model.joblib')),
+    'Gaussian Naive Bayes': joblib.load(os.path.join(script_dir, 'model', 'gaussian_naive_bayes_model.joblib')),
+    'Random Forest': joblib.load(os.path.join(script_dir, 'model', 'random_forest_model.joblib')),
+    'XGBoost': joblib.load(os.path.join(script_dir, 'model', 'xgboost_model.joblib'))
 }
-
 # Load model performance metrics (overall from training/testing split)
-model_performance = joblib.load('model_performance.joblib')
+model_performance = joblib.load(os.path.join(script_dir, 'model', 'model_performance.joblib'))
 performance_df = pd.DataFrame(model_performance).T
 
 # Define feature names from the original X DataFrame for input fields
